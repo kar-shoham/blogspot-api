@@ -7,6 +7,7 @@ const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const catRoute = require("./routes/categories");
 const cookieParser = require("cookie-parser");
+const cors = require('cors')
 let cloudinary = require("cloudinary");
 
 dotenv.config();
@@ -25,6 +26,11 @@ cloudinary.v2.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000', 
+  credentials: true
+}))
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
